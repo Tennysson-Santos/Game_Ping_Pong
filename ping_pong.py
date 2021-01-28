@@ -35,8 +35,9 @@ class Bolinha:
 		self.textura.fill(self.cor)
 		self.corpo = [(120, 120)]
 		self.direcao = 'direita'
+		self.pontos = 0
+		self.pontos1 = 0
 		
-
 	def tela(self, tela):
 		for posicao in self.corpo:
 			tela.blit(self.textura, posicao)
@@ -82,10 +83,8 @@ class Bolinha:
 		
 		if  x == 0 or y == 0 or x == 10 or y == 10:				
 			if self.direcao != 'direita':
-				self.direcao = 'direita'
-	
-	
-	
+				self.direcao = 'direita'		
+
 		
 	def colisao_jogador(self):
 		corpo = self.corpo[0]
@@ -95,6 +94,21 @@ class Bolinha:
 			if self.direcao != 'esquerda':
 				self.direcao = 'esquerda' 
 	
+	def ponto_jogador(self):
+		corpo = self.corpo[0]
+		x = corpo[0]
+		y = corpo[1]	
+		if  x == 10 or y == 10:			
+			self.pontos += 1
+			pygame.display.set_caption(f'Jogador - Pontos:{self.pontos}')
+			
+	def ponto_computador(self):	
+		corpo = self.corpo[0]
+		x = corpo[0]
+		y = corpo[1]	
+		if  x == 890 or y == 890:	
+			self.pontos1 += 1
+			pygame.display.set_caption(f'Computador - Pontos:{self.pontos1}')
 
 
 class Jogador:
@@ -108,6 +122,7 @@ class Jogador:
 
 		self.corpo = [(890, 100),(890, 110),(890, 120),(890, 130),(890, 140),(890, 150),(890, 160)]
 		self.direcao = 'baixo'
+		self.pontos = 0
 
 	def tela(self, tela):
 		for posicao in self.corpo:
@@ -151,6 +166,7 @@ class Computador:
 
 		self.corpo = [(0, 100),(0, 110),(0, 120),(0, 130),(0, 140),(0, 150),(0, 160)]
 		self.direcao = 'baixo'
+		self.pontos = 0
 
 	def tela(self, tela):
 		for posicao in self.corpo:
@@ -232,6 +248,8 @@ while True:
 	bolinha.andar()	
 	jogador.andar()
 
+	bolinha.ponto_computador()	
+	bolinha.ponto_jogador()
 		
 	tela.fill(cor_tela)
 		
